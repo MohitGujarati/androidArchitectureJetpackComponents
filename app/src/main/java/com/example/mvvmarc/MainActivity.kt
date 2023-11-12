@@ -1,51 +1,39 @@
 package com.example.mvvmarc
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
-import androidx.lifecycle.LifecycleOwner
+import androidx.appcompat.app.AppCompatActivity
+import com.example.mvvmarc.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var binding: ActivityMainBinding
+    private var counter = 0
     companion object {
         const val LOGTAG = "LifeCycle"
+
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         val observer = Observer()
-
         lifecycle.addObserver(observer)
 
         Log.d(LOGTAG, "Activity - onCreate")
 
+        binding.btnIncrement.setOnClickListener {
+            Counter()
+        }
+
+
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d(LOGTAG, "Activity - onStart")
-    }
+    fun Counter() {
+        counter++
+        binding.textView.text= counter.toString()
 
-    override fun onResume() {
-        super.onResume()
-        Log.d(LOGTAG, "Activity - onResume")
     }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(LOGTAG, "Activity - onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(LOGTAG, "Activity - onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d(LOGTAG, "Activity - onDestroy")
-    }
-
 
 }
