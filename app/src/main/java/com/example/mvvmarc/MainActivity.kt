@@ -3,6 +3,7 @@ package com.example.mvvmarc
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.mvvmarc.databinding.ActivityMainBinding
 
@@ -21,7 +22,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         val observer = Observer()
         lifecycle.addObserver(observer)
-        mainviewmodel=ViewModelProvider(this,mainViewModelFactory(10)).get(mainViewModel::class.java)
+        mainviewmodel=ViewModelProvider(this,mainViewModelFactory(0)).get(mainViewModel::class.java)
+
+        mainviewmodel.numberLiveData.observe(this, Observer{
+            binding.textView1.text=it
+        })
 
         Log.d(LOGTAG, "Activity - onCreate")
 
