@@ -3,11 +3,12 @@ package com.example.mvvmarc
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.mvvmarc.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private var counter = 0
+    lateinit var mainviewmodel: mainViewModel
     companion object {
         const val LOGTAG = "LifeCycle"
 
@@ -20,20 +21,27 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         val observer = Observer()
         lifecycle.addObserver(observer)
+        mainviewmodel=ViewModelProvider(this,mainViewModelFactory(10)).get(mainViewModel::class.java)
 
         Log.d(LOGTAG, "Activity - onCreate")
 
+        setText()
+
         binding.btnIncrement.setOnClickListener {
-            Counter()
+            increment()
+            setText()
         }
 
 
     }
 
-    fun Counter() {
-        counter++
-        binding.textView.text= counter.toString()
-
+    private fun setText() {
+        binding.textView.text=mainviewmodel.count.toString()
     }
+
+    private fun increment(){
+        mainviewmodel.increment()
+    }
+
 
 }
