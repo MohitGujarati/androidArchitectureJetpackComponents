@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
         const val LOGTAG = "MainActivityLog"
 
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,32 +25,11 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         val lifecycleobserver = Observer()
         lifecycle.addObserver(lifecycleobserver)
-
-
-        //Adding observer to keep eye on data so as soon as it changes the data here
-        val observer = Observer<String> {
-            binding.textView1.text = it
-        }
-
         // Initialize ViewModel using ViewModelProvider
         mainViewModel = ViewModelProvider(this, MainViewModelFactory(0)).get(MainViewModel::class.java)
-
-        // Observe the EOTextLiveData in the ViewModel
-        mainViewModel.EOTextLiveData.observe(this, observer)
-
-        // Set ViewModel to the binding
+        // Set ViewModel to the binding we need to pass lifecycleowener
+        binding.lifecycleOwner=this
         binding.viewModelData = mainViewModel
-
-        // Set up click listener for the button
-        binding.btnIncrement.setOnClickListener {
-            mainViewModel.increment()
-            setText()
-        }
-
-        setText()
     }
 
-    private fun setText() {
-        binding.textView.text = mainViewModel.count.toString()
-    }
 }
