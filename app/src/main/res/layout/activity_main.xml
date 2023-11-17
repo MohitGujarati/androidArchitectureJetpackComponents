@@ -3,9 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModelData"
             type="com.example.mvvmarc.MainViewModel" />
+        <import type="android.view.View" />
+        <import type="android.text.TextWatcher" />
     </data>
 
     <LinearLayout
@@ -15,13 +18,27 @@
         android:orientation="vertical"
         tools:context=".MainActivity">
 
-        <!-- Observe LiveData directly in the layout -->
+        <!--
+        two way binding
+        Now when I update this edittext data in
+        MainViewModel class will be update because of equal to sign
+         -->
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@={viewModelData.EOtwoway}"
+            android:textSize="12sp" />
+
+
+        <!-- Observe LiveData directly in the layout
+        android:text="@{viewModelData.EOTextLiveData}"
+        -->
         <TextView
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="@{viewModelData.EOTextLiveData}"
+            android:text="@{viewModelData.EOtwoway}"
             android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
             android:textSize="28sp" />
 
@@ -30,7 +47,8 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.valueOf(viewModelData.ViewDataModel.number)}"            android:textSize="18sp" />
+            android:text="@{String.valueOf(viewModelData.ViewDataModel.number)}"
+            android:textSize="18sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnIncrement"

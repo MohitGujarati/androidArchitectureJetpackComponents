@@ -14,6 +14,9 @@ class MainViewModel(initialValue: Int) : ViewModel() {
         it.textData
     }
 
+    val EOtwoway = MutableLiveData<String>()
+
+
 
     var count: Int = initialValue
 
@@ -38,5 +41,6 @@ class MainViewModel(initialValue: Int) : ViewModel() {
 
     private fun updateViewDataModel() {
         ViewDataModel.value = textDataModel( "Custom input", count)
+        EOtwoway.value = "Custom input $count"
     }
 }
